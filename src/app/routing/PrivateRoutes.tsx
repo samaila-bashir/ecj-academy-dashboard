@@ -2,8 +2,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import { DashboardWrapper } from "../pages/dashboard/DashboardWrapper";
 import Expenditures from "../pages/Expenditures";
-import Players from "../pages/Players";
 import Users from "../pages/Users";
+import Players from "../pages/Players";
 
 const PrivateRoutes = () => {
   return (
