@@ -8,6 +8,7 @@ interface TextInputProps {
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   touched?: boolean;
+  columnMd?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -20,9 +21,10 @@ const TextInput: React.FC<TextInputProps> = ({
   onBlur,
   error,
   touched,
+  columnMd = "col-md-6",
 }) => {
   return (
-    <div className="col-md-6 mb-3">
+    <div className={`${columnMd} mb-3`}>
       <label className="form-label">{label}</label>
       <input
         type={type}
