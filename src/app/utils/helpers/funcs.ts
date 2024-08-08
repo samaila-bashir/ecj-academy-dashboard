@@ -1,3 +1,14 @@
+export const formatAmount = (num: number | string): string => {
+  const parsedNumber = typeof num === "string" ? parseFloat(num) : num;
+
+  if (!Number.isFinite(parsedNumber)) {
+    throw new Error("Invalid number provided for formatting.");
+  }
+
+  // Format the number with two decimal places and thousand separators
+  return "₦" + parsedNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 export const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };

@@ -9,6 +9,7 @@ import {
 } from "../../slices/expenditures";
 import { TExpenditure } from "../../../app/pages/Expenditures";
 import { SAGA_ACTIONS } from "../actions";
+import { formatAmount } from "../../../app/utils/helpers";
 
 function* fetchExpendituresSaga(): Generator<any, void, any> {
   try {
@@ -22,7 +23,7 @@ function* fetchExpendituresSaga(): Generator<any, void, any> {
         return {
           id: doc.id,
           category: data.category,
-          amount: data.amount,
+          amount: formatAmount(data.amount),
           description: data.description,
           date: data.date.toDate().toLocaleDateString(),
         };
