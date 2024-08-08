@@ -15,6 +15,7 @@ const Players = () => {
       phoneNumber: "08020202020",
       dob: "01/08/1991",
       homeAddress: "Home address...",
+      date: "01/02/2024",
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ const Players = () => {
       phoneNumber: "08020202020",
       dob: "12/12/1992",
       homeAddress: "Home address...",
+      date: "01/02/2024",
     },
   ];
 
