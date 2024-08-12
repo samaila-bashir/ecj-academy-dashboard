@@ -3,32 +3,24 @@ import { ToolbarWrapper } from "../../../_metronic/layout/components/toolbar";
 import { PageTitle } from "../../../_metronic/layout/core";
 import { TablesWidget13 } from "../../../_metronic/partials/widgets";
 import Form from "./Form";
+import { useSelector, useDispatch } from "react-redux";
+import { SAGA_ACTIONS } from "../../../store/sagas/actions";
+import { RootState } from "../../../store";
+import { useEffect } from "react";
 
 const Players = () => {
-  const playersData = [
-    {
-      id: 1,
-      firstName: "Sunday",
-      lastName: "Ade",
-      stateOfOrigin: "Adamawa",
-      email: "sunday@gmail.com",
-      phoneNumber: "08020202020",
-      dob: "01/08/1991",
-      homeAddress: "Home address...",
-      date: "01/02/2024",
-    },
-    {
-      id: 2,
-      firstName: "Mike",
-      lastName: "John",
-      stateOfOrigin: "Kogi",
-      email: "mike@gmail.com",
-      phoneNumber: "08020202020",
-      dob: "12/12/1992",
-      homeAddress: "Home address...",
-      date: "01/02/2024",
-    },
-  ];
+  const dispatch = useDispatch();
+
+  const { players, error, loading } = useSelector(
+    (state: RootState) => state.players
+  );
+
+  useEffect(() => {
+    dispatch({ type: SAGA_ACTIONS.GET_PLAYERS });
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -38,7 +30,7 @@ const Players = () => {
         <TablesWidget13
           className="card-xxl-stretch mb-5 mb-xl-12"
           mainTitle="All Players"
-          tableData={playersData}
+          tableData={players}
           modalTitle="Add Player"
           Form={Form}
         />

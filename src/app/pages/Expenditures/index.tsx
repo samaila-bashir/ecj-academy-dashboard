@@ -8,14 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { RootState } from "../../../store";
 
-export type TExpenditure = {
-  id: string;
-  category: string;
-  amount: string;
-  description: string;
-  date: string;
-};
-
 const Expenditures = () => {
   const dispatch = useDispatch();
 
