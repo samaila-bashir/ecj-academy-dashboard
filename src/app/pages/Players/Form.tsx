@@ -1,7 +1,10 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../components/TextInput";
+import { useDispatch } from "react-redux";
+import { SAGA_ACTIONS } from "../../../store/sagas/actions";
+import Swal from "sweetalert2";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("First Name is required"),
@@ -36,6 +39,8 @@ interface FormValues {
 }
 
 const Form = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
+
   const formik = useFormik<FormValues>({
     initialValues,
     validationSchema,
@@ -43,8 +48,19 @@ const Form = forwardRef((props, ref) => {
       values: FormValues,
       { resetForm }: FormikHelpers<FormValues>
     ) => {
-      // Handle form submission
-      console.log(values);
+      dispatch({
+        type: SAGA_ACTIONS.ADD_PLAYER,
+        payload: values,
+      });
+
+      Swal.fire({
+        title: "Success!",
+        text: "Player has been added successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      // TODO: Properly close modal after form submission
 
       resetForm();
     },

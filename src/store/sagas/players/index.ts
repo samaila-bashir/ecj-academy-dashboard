@@ -1,11 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { call, put, takeLatest } from "redux-saga/effects";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 import {
   fetchPlayersFailure,
   fetchPlayersRequest,
   fetchPlayersSuccess,
+  addPlayerFailure,
+  addPlayerRequest,
+  addPlayerSuccess,
+  deletePlayerRequest,
+  deletePlayerSuccess,
+  deletePlayerFailure,
 } from "../../slices/players";
 import { SAGA_ACTIONS } from "../actions";
 import { TPlayers } from "../../../app/utils/types";
@@ -39,4 +52,52 @@ function* fetchPlayersSaga(): Generator<any, void, any> {
 
 export function* watchFetchPlayers(): Generator {
   yield takeLatest(SAGA_ACTIONS.GET_PLAYERS, fetchPlayersSaga);
+}
+
+function* addPlayerSaga(action: {
+  type: string;
+  payload: TPlayers;
+}): Generator<any, void, any> {
+  try {
+    yield put(addPlayerRequest());
+
+    const timestamp = Timestamp.now();
+
+    const docRef = yield call(addDoc, collection(db, "players"), {
+      ...action.payload,
+      date: timestamp,
+    });
+
+    const newPlayer = {
+      ...action.payload,
+      id: docRef.id,
+      date: timestamp.toDate().toLocaleDateString(),
+    };
+
+    yield put(addPlayerSuccess(newPlayer));
+  } catch (error: any) {
+    yield put(addPlayerFailure(error.message));
+  }
+}
+
+export function* watchAddPlayer(): Generator {
+  yield takeLatest(SAGA_ACTIONS.ADD_PLAYER, addPlayerSaga);
+}
+
+function* deletePlayerSaga(action: {
+  type: string;
+  payload: string;
+}): Generator<any, void, any> {
+  try {
+    yield put(deletePlayerRequest());
+    const playerDoc = doc(db, "players", action.payload);
+    yield call(deleteDoc, playerDoc);
+    yield put(deletePlayerSuccess(action.payload));
+  } catch (error: any) {
+    yield put(deletePlayerFailure(error.message));
+  }
+}
+
+export function* watchDeletePlayer(): Generator {
+  yield takeLatest(SAGA_ACTIONS.DELETE_PLAYER, deletePlayerSaga);
 }

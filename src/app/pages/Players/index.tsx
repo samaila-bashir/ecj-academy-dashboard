@@ -22,6 +22,10 @@ const Players = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const handleDeleteRecord = (id: string | number) => {
+    dispatch({ type: SAGA_ACTIONS.DELETE_PLAYER, payload: id });
+  };
+
   return (
     <>
       <ToolbarWrapper />
@@ -33,6 +37,7 @@ const Players = () => {
           tableData={players}
           modalTitle="Add Player"
           Form={Form}
+          onDelete={handleDeleteRecord}
         />
       </Content>
     </>

@@ -29,10 +29,44 @@ const playersSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    addPlayerRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    addPlayerSuccess(state, action: PayloadAction<TPlayers>) {
+      state.loading = false;
+      state.players.push(action.payload);
+    },
+    addPlayerFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    deletePlayerRequest(state) {
+      state.loading = true;
+    },
+    deletePlayerSuccess(state, action: PayloadAction<string>) {
+      state.players = state.players.filter(
+        (player) => player.id !== action.payload
+      );
+      state.loading = false;
+    },
+    deletePlayerFailure(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+      state.loading = false;
+    },
   },
 });
 
-export const { fetchPlayersRequest, fetchPlayersSuccess, fetchPlayersFailure } =
-  playersSlice.actions;
+export const {
+  fetchPlayersRequest,
+  fetchPlayersSuccess,
+  fetchPlayersFailure,
+  addPlayerRequest,
+  addPlayerSuccess,
+  addPlayerFailure,
+  deletePlayerRequest,
+  deletePlayerSuccess,
+  deletePlayerFailure,
+} = playersSlice.actions;
 
 export default playersSlice.reducer;

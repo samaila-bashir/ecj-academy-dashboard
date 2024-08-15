@@ -5,6 +5,7 @@ import {
   addSpaceBeforeUppercase,
   capitalizeFirstLetter,
 } from "../../../../app/utils/helpers";
+import Swal from "sweetalert2";
 
 type Data = {
   [key: string]: string | number;
@@ -23,17 +24,19 @@ type Props = {
   showDeleteBtn?: boolean;
   modalTitle: string;
   Form: ElementType;
+  onDelete: (id: string | number) => void;
 };
 
 const TablesWidget13: React.FC<Props> = ({
   className,
   mainTitle,
   tableData,
-  showDetailsBtn = true,
+  showDetailsBtn = false,
   showEditBtn = true,
-  showDeleteBtn = false,
+  showDeleteBtn = true,
   modalTitle,
   Form,
+  onDelete,
 }) => {
   const formRef = useRef<FormRef>(null);
 
@@ -41,6 +44,25 @@ const TablesWidget13: React.FC<Props> = ({
     if (formRef.current) {
       formRef.current.submitForm();
     }
+  };
+
+  const handleDelete = (id: string | number) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onDelete(id);
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your record is safe :)", "error");
+      }
+    });
   };
 
   const headers =
@@ -115,6 +137,7 @@ const TablesWidget13: React.FC<Props> = ({
                         <a
                           href="#"
                           className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                          onClick={() => handleDelete(data.id)}
                         >
                           <KTIcon iconName="trash" className="fs-3" />
                         </a>
