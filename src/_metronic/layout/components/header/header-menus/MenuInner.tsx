@@ -9,7 +9,7 @@ export function MenuInner() {
         title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
         to="/dashboard"
       />
-      <MenuItem title="Rename" to="#" />
+      {/* <MenuItem title="Rename" to="#" /> */}
     </>
   );
 }

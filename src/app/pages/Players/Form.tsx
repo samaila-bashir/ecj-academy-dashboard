@@ -39,16 +39,6 @@ interface FormValues {
   homeAddress: string;
 }
 
-interface FormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  stateOfOrigin: string;
-  phoneNumber: string;
-  dob: string;
-  homeAddress: string;
-}
-
 interface FormProps {
   initialData?: FormValues;
 }
@@ -140,7 +130,9 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
           >
             <option value="">--- Select State ---</option>
             {states.map((state) => (
-              <option value={state}>{state}</option>
+              <option value={state} key={state}>
+                {state}
+              </option>
             ))}
           </select>
           {formik.touched.stateOfOrigin && formik.errors.stateOfOrigin ? (

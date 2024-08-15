@@ -36,9 +36,9 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className="menu-item px-5">
-        <a href="#" className="menu-link px-5">
-          My Statements
-        </a>
+        <Link to="/expense-categories" className="menu-link px-5">
+          Expense Categories
+        </Link>
       </div>
 
       <div className="separator my-2"></div>

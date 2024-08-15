@@ -1,6 +1,12 @@
+export type TExpenseCategory = {
+  id: string;
+  name: string;
+  description: string;
+};
+
 export type TExpenditure = {
   id: string;
-  category: string;
+  categoryId: string;
   amount: string;
   description: string;
   date: string;

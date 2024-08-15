@@ -27,6 +27,36 @@ import {
 import { SAGA_ACTIONS } from "../actions";
 import { TPlayers } from "../../../app/utils/types";
 
+function* addPlayerSaga(action: {
+  type: string;
+  payload: TPlayers;
+}): Generator<any, void, any> {
+  try {
+    yield put(addPlayerRequest());
+
+    const timestamp = Timestamp.now();
+
+    const docRef = yield call(addDoc, collection(db, "players"), {
+      ...action.payload,
+      date: timestamp,
+    });
+
+    const newPlayer = {
+      ...action.payload,
+      id: docRef.id,
+      date: timestamp.toDate().toLocaleDateString(),
+    };
+
+    yield put(addPlayerSuccess(newPlayer));
+  } catch (error: any) {
+    yield put(addPlayerFailure(error.message));
+  }
+}
+
+export function* watchAddPlayer(): Generator {
+  yield takeLatest(SAGA_ACTIONS.ADD_PLAYER, addPlayerSaga);
+}
+
 function* fetchPlayersSaga(): Generator<any, void, any> {
   try {
     yield put(fetchPlayersRequest());
@@ -56,36 +86,6 @@ function* fetchPlayersSaga(): Generator<any, void, any> {
 
 export function* watchFetchPlayers(): Generator {
   yield takeLatest(SAGA_ACTIONS.GET_PLAYERS, fetchPlayersSaga);
-}
-
-function* addPlayerSaga(action: {
-  type: string;
-  payload: TPlayers;
-}): Generator<any, void, any> {
-  try {
-    yield put(addPlayerRequest());
-
-    const timestamp = Timestamp.now();
-
-    const docRef = yield call(addDoc, collection(db, "players"), {
-      ...action.payload,
-      date: timestamp,
-    });
-
-    const newPlayer = {
-      ...action.payload,
-      id: docRef.id,
-      date: timestamp.toDate().toLocaleDateString(),
-    };
-
-    yield put(addPlayerSuccess(newPlayer));
-  } catch (error: any) {
-    yield put(addPlayerFailure(error.message));
-  }
-}
-
-export function* watchAddPlayer(): Generator {
-  yield takeLatest(SAGA_ACTIONS.ADD_PLAYER, addPlayerSaga);
 }
 
 function* editPlayerSaga(action: {

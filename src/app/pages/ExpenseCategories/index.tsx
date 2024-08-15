@@ -11,31 +11,31 @@ import { RootState } from "../../../store";
 const Expenditures = () => {
   const dispatch = useDispatch();
 
-  const { expenditures, error, loading } = useSelector(
-    (state: RootState) => state.expense
+  const { categories, error, loading } = useSelector(
+    (state: RootState) => state.expenseCategory
   );
 
   useEffect(() => {
-    dispatch({ type: SAGA_ACTIONS.GET_EXPENDITURES });
+    dispatch({ type: SAGA_ACTIONS.GET_EXPENSES_CATEGORIES });
   }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   const handleDeleteRecord = (id: string | number) => {
-    dispatch({ type: SAGA_ACTIONS.DELETE_EXPENDITURE, payload: id });
+    dispatch({ type: SAGA_ACTIONS.DELETE_EXPENSE_CATEGORY, payload: id });
   };
 
   return (
     <>
       <ToolbarWrapper />
-      <PageTitle>Expenditures</PageTitle>
+      <PageTitle>Expense Categories</PageTitle>
       <Content>
         <TablesWidget13
           className="card-xxl-stretch mb-5 mb-xl-12"
-          mainTitle="Recent Expenditures"
-          tableData={expenditures}
-          modalTitle="Add Expenditure"
+          mainTitle="Recent Expense Categories"
+          tableData={categories}
+          modalTitle="Add Category"
           Form={Form}
           onDelete={handleDeleteRecord}
         />

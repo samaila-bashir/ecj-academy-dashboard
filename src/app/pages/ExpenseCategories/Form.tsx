@@ -2,27 +2,21 @@ import { forwardRef, useImperativeHandle } from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
-import { RootState } from "../../../store";
 
 const validationSchema = Yup.object({
-  categoryId: Yup.string().required("Category is required"),
-  amount: Yup.number()
-    .required("Amount is required")
-    .positive("Amount must be positive"),
+  name: Yup.string().required("Category name is required"),
   description: Yup.string().required("Description is required"),
 });
 
 const initialValues = {
-  categoryId: "",
-  amount: "",
+  name: "",
   description: "",
 };
 
 interface FormValues {
-  categoryId: string;
-  amount: string;
+  name: string;
   description: string;
 }
 
@@ -33,10 +27,6 @@ interface FormProps {
 const Form = forwardRef(({ initialData }: FormProps, ref) => {
   const dispatch = useDispatch();
 
-  const { categories } = useSelector(
-    (state: RootState) => state.expenseCategory
-  );
-
   const formik = useFormik<FormValues>({
     initialValues: initialData || initialValues,
     validationSchema,
@@ -46,25 +36,25 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
     ) => {
       if (initialData) {
         dispatch({
-          type: SAGA_ACTIONS.EDIT_EXPENDITURE,
+          type: SAGA_ACTIONS.EDIT_EXPENSE_CATEGORY,
           payload: { ...initialData, ...values },
         });
 
         Swal.fire({
           title: "Success!",
-          text: "Expenditure has been updated successfully.",
+          text: "Expenditure category has been updated successfully.",
           icon: "success",
           confirmButtonText: "OK",
         });
       } else {
         dispatch({
-          type: SAGA_ACTIONS.ADD_EXPENDITURE,
+          type: SAGA_ACTIONS.ADD_EXPENSE_CATEGORY,
           payload: values,
         });
 
         Swal.fire({
           title: "Success!",
-          text: "Expenditure has been added successfully.",
+          text: "Expenditure category has been added successfully.",
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -83,49 +73,27 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mb-10">
-        <label className="form-label">Category</label>
-        <select
-          name="categoryId"
-          className="form-select"
-          aria-label="Select category"
-          value={formik.values.categoryId}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        >
-          <option value="">--- Select Expense Category ---</option>
-          {categories.map((category) => (
-            <option value={category.id} key={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        {formik.touched.categoryId && formik.errors.categoryId ? (
-          <div className="text-danger">{formik.errors.categoryId}</div>
-        ) : null}
-      </div>
-
-      <div className="mb-10">
-        <label className="form-label">Amount</label>
+        <label className="form-label">Category Name</label>
         <input
           type="text"
-          name="amount"
+          name="name"
           className="form-control"
-          placeholder="Enter amount"
-          value={formik.values.amount}
+          placeholder="Enter category name"
+          value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.amount && formik.errors.amount ? (
-          <div className="text-danger">{formik.errors.amount}</div>
+        {formik.touched.name && formik.errors.name ? (
+          <div className="text-danger">{formik.errors.name}</div>
         ) : null}
       </div>
 
       <div className="mb-10">
-        <label className="form-label">Expense Description</label>
+        <label className="form-label">Category Description</label>
         <textarea
           name="description"
           className="form-control"
-          placeholder="Provide a description for this expense..."
+          placeholder="Provide a description for this category..."
           rows={5}
           value={formik.values.description}
           onChange={formik.handleChange}

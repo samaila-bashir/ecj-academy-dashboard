@@ -4,6 +4,7 @@ import Modal from "../../../../app/components/Modal";
 import {
   addSpaceBeforeUppercase,
   capitalizeFirstLetter,
+  formatAmount,
 } from "../../../../app/utils/helpers";
 import Swal from "sweetalert2";
 
@@ -43,6 +44,7 @@ const TablesWidget13: React.FC<Props> = ({
 
   const closeModal = () => {
     setShowModal(false);
+    setSelectedItem(null);
   };
 
   const formRef = useRef<FormRef>(null);
@@ -127,7 +129,9 @@ const TablesWidget13: React.FC<Props> = ({
                   <tr key={index}>
                     {headers.map((header) => (
                       <td className="text-gray-900 fs-6" key={header}>
-                        {data[header]}
+                        {header === "amount"
+                          ? formatAmount(data[header])
+                          : data[header]}
                       </td>
                     ))}
                     <td className="text-end">

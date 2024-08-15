@@ -4,6 +4,7 @@ import { DashboardWrapper } from "../pages/dashboard/DashboardWrapper";
 import Expenditures from "../pages/Expenditures";
 import Users from "../pages/Users";
 import Players from "../pages/Players";
+import ExpenseCategories from "../pages/ExpenseCategories";
 
 const PrivateRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const PrivateRoutes = () => {
         <Route path="/ependitures" element={<Expenditures />} />
         <Route path="/players" element={<Players />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/expense-categories" element={<ExpenseCategories />} />
         {/* Page Not Found */}
         <Route path="*" element={<Navigate to="/error/404" />} />
       </Route>
