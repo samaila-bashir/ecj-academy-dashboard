@@ -5,6 +5,7 @@ import TextInput from "../../components/TextInput";
 import { useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import Swal from "sweetalert2";
+import { states } from "../../utils/data";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("First Name is required"),
@@ -38,29 +39,55 @@ interface FormValues {
   homeAddress: string;
 }
 
-const Form = forwardRef((props, ref) => {
+interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  stateOfOrigin: string;
+  phoneNumber: string;
+  dob: string;
+  homeAddress: string;
+}
+
+interface FormProps {
+  initialData?: FormValues;
+}
+
+const Form = forwardRef(({ initialData }: FormProps, ref) => {
   const dispatch = useDispatch();
 
   const formik = useFormik<FormValues>({
-    initialValues,
+    initialValues: initialData || initialValues,
     validationSchema,
     onSubmit: (
       values: FormValues,
       { resetForm }: FormikHelpers<FormValues>
     ) => {
-      dispatch({
-        type: SAGA_ACTIONS.ADD_PLAYER,
-        payload: values,
-      });
+      if (initialData) {
+        dispatch({
+          type: SAGA_ACTIONS.EDIT_PLAYER,
+          payload: { ...initialData, ...values },
+        });
 
-      Swal.fire({
-        title: "Success!",
-        text: "Player has been added successfully.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
+        Swal.fire({
+          title: "Success!",
+          text: "Player has been updated successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      } else {
+        dispatch({
+          type: SAGA_ACTIONS.ADD_PLAYER,
+          payload: values,
+        });
 
-      // TODO: Properly close modal after form submission
+        Swal.fire({
+          title: "Success!",
+          text: "Player has been added successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
 
       resetForm();
     },
@@ -112,9 +139,9 @@ const Form = forwardRef((props, ref) => {
             onBlur={formik.handleBlur}
           >
             <option value="">--- Select State ---</option>
-            <option value="1">Kaduna</option>
-            <option value="2">Lagos</option>
-            <option value="3">Adamawa</option>
+            {states.map((state) => (
+              <option value={state}>{state}</option>
+            ))}
           </select>
           {formik.touched.stateOfOrigin && formik.errors.stateOfOrigin ? (
             <div className="text-danger">{formik.errors.stateOfOrigin}</div>

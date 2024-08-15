@@ -1,4 +1,4 @@
-import React, { ElementType, useRef } from "react";
+import React, { ElementType, useRef, useState } from "react";
 import { KTIcon } from "../../../helpers";
 import Modal from "../../../../app/components/Modal";
 import {
@@ -38,12 +38,25 @@ const TablesWidget13: React.FC<Props> = ({
   Form,
   onDelete,
 }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Data | null>(null);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const formRef = useRef<FormRef>(null);
 
   const handleSubmit = () => {
     if (formRef.current) {
       formRef.current.submitForm();
+      setShowModal(false);
     }
+  };
+
+  const handleEdit = (item: Data) => {
+    setSelectedItem(item);
+    setShowModal(true);
   };
 
   const handleDelete = (id: string | number) => {
@@ -81,8 +94,9 @@ const TablesWidget13: React.FC<Props> = ({
           <button
             type="button"
             className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#kt_modal_1"
+            // data-bs-toggle="modal"
+            // data-bs-target="#kt_modal_1"
+            onClick={() => setShowModal(true)}
           >
             <KTIcon iconName="plus" className="fs-2" />
             Add Record
@@ -129,6 +143,7 @@ const TablesWidget13: React.FC<Props> = ({
                         <a
                           href="#"
                           className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                          onClick={() => handleEdit(data)}
                         >
                           <KTIcon iconName="pencil" className="fs-3" />
                         </a>
@@ -155,8 +170,13 @@ const TablesWidget13: React.FC<Props> = ({
         {/* begin::Body */}
       </div>
 
-      <Modal title={modalTitle} onSubmit={handleSubmit}>
-        <Form ref={formRef} />
+      <Modal
+        title={modalTitle}
+        onSubmit={handleSubmit}
+        show={showModal}
+        handleClose={closeModal}
+      >
+        <Form ref={formRef} initialData={selectedItem} />
       </Modal>
     </>
   );

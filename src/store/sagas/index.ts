@@ -4,6 +4,7 @@ import { watchFetchExpenditures } from "./expenditures";
 import {
   watchAddPlayer,
   watchDeletePlayer,
+  watchEditPlayer,
   watchFetchPlayers,
 } from "./players";
 
@@ -14,6 +15,7 @@ export default function* rootSaga(): Generator {
     fork(watchFetchExpenditures),
     fork(watchFetchPlayers),
     fork(watchAddPlayer),
+    fork(watchEditPlayer),
     fork(watchDeletePlayer),
   ]);
 }

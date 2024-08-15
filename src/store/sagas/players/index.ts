@@ -2,6 +2,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
   addDoc,
+  updateDoc,
   collection,
   deleteDoc,
   doc,
@@ -16,6 +17,9 @@ import {
   addPlayerFailure,
   addPlayerRequest,
   addPlayerSuccess,
+  editPlayerRequest,
+  editPlayerFailure,
+  editPlayerSuccess,
   deletePlayerRequest,
   deletePlayerSuccess,
   deletePlayerFailure,
@@ -82,6 +86,29 @@ function* addPlayerSaga(action: {
 
 export function* watchAddPlayer(): Generator {
   yield takeLatest(SAGA_ACTIONS.ADD_PLAYER, addPlayerSaga);
+}
+
+function* editPlayerSaga(action: {
+  type: string;
+  payload: TPlayers;
+}): Generator<any, void, any> {
+  try {
+    yield put(editPlayerRequest());
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { date, ...payloadWithoutDate } = action.payload;
+
+    const playerRef = doc(db, "players", action.payload.id);
+    yield call(() => updateDoc(playerRef, payloadWithoutDate));
+
+    yield put(editPlayerSuccess(action.payload));
+  } catch (error: any) {
+    yield put(editPlayerFailure(error.message));
+  }
+}
+
+export function* watchEditPlayer(): Generator {
+  yield takeLatest(SAGA_ACTIONS.EDIT_PLAYER, editPlayerSaga);
 }
 
 function* deletePlayerSaga(action: {

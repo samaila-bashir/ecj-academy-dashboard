@@ -41,6 +41,23 @@ const playersSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    editPlayerRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    editPlayerSuccess(state, action: PayloadAction<TPlayers>) {
+      state.loading = false;
+      const index = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.players[index] = action.payload;
+      }
+    },
+    editPlayerFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
     deletePlayerRequest(state) {
       state.loading = true;
     },
@@ -64,6 +81,9 @@ export const {
   addPlayerRequest,
   addPlayerSuccess,
   addPlayerFailure,
+  editPlayerRequest,
+  editPlayerSuccess,
+  editPlayerFailure,
   deletePlayerRequest,
   deletePlayerSuccess,
   deletePlayerFailure,
