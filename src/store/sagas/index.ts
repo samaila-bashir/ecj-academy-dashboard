@@ -1,5 +1,9 @@
 import { all, fork } from "redux-saga/effects";
-import { watchHandleLogin, watchHandleLogout } from "./authentication";
+import {
+  watchHandleGoogleLogin,
+  watchHandleLogin,
+  watchHandleLogout,
+} from "./authentication";
 import {
   watchFetchExpenditures,
   watchAddExpenditure,
@@ -23,6 +27,7 @@ export default function* rootSaga(): Generator {
   yield all([
     fork(watchHandleLogin),
     fork(watchHandleLogout),
+    watchHandleGoogleLogin(),
     fork(watchFetchExpenditures),
     fork(watchAddExpenditure),
     fork(watchEditExpenditure),

@@ -76,6 +76,12 @@ export function Login() {
           <a
             href="#"
             className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100"
+            onClick={() => {
+              dispatch({
+                type: SAGA_ACTIONS.GOOGLE_LOGIN,
+                payload: { navigate },
+              });
+            }}
           >
             <img
               alt="Logo"
