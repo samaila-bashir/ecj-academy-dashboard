@@ -14,23 +14,28 @@ import {
   logoutError,
   logoutSuccess,
 } from "../../slices/authentication";
-// import { ROUTES } from '../../../utils/const'
-// import router from '../../../route.config'
 import { SAGA_ACTIONS } from "../actions";
 import { getFireBaseLoginErrorMessage } from "../../../app/utils/helpers";
 // import { notificationCenter } from '../../../utils/toast'
+import { NavigateFunction } from "react-router-dom";
 
 interface IUser {
   email: string;
   password: string;
 }
 
+interface ILoginActionPayload {
+  user: IUser;
+  navigate: NavigateFunction;
+}
+
 export function* watchHandleLogin(): Generator {
   yield takeLatest(SAGA_ACTIONS.LOGIN, handleLogin);
 }
 
-function* handleLogin(action: PayloadAction<IUser>): Generator {
-  const { email, password } = action.payload;
+function* handleLogin(action: PayloadAction<ILoginActionPayload>): Generator {
+  const { email, password } = action.payload.user;
+  const { navigate } = action.payload;
 
   try {
     yield put(loginRequest());
@@ -48,7 +53,8 @@ function* handleLogin(action: PayloadAction<IUser>): Generator {
     ])) as string;
 
     yield put(loginSuccess({ user: userCredential, token }));
-    // yield router.navigate(ROUTES.DASHBOARD)
+
+    yield call(() => navigate("/dashboard"));
   } catch (error: any) {
     const errorMessage = getFireBaseLoginErrorMessage(error.code);
     yield put(loginFailure(errorMessage));
@@ -64,11 +70,16 @@ export function* watchHandleLogout(): Generator {
   yield takeEvery(SAGA_ACTIONS.LOGOUT, handleLogout);
 }
 
-function* handleLogout(): Generator {
+function* handleLogout(
+  action: PayloadAction<{ navigate: NavigateFunction }>
+): Generator {
+  const { navigate } = action.payload;
+
   try {
     yield call(signOut, auth);
     yield put(logoutSuccess());
-    // yield router.navigate(ROUTES.AUTHENTICATION)
+
+    yield call(() => navigate("/dashboard"));
   } catch (error: any) {
     yield put(logoutError(error.message));
   }

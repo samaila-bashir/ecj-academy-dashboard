@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { toAbsoluteUrl } from "../../../_metronic/helpers";
 
 const AuthLayout = () => {
@@ -28,26 +28,6 @@ const AuthLayout = () => {
           {/* end::Wrapper */}
         </div>
         {/* end::Form */}
-
-        {/* begin::Footer */}
-        <div className="d-flex flex-center flex-wrap px-5">
-          {/* begin::Links */}
-          <div className="d-flex fw-semibold text-primary fs-base">
-            <a href="#" className="px-5" target="_blank">
-              Terms
-            </a>
-
-            <a href="#" className="px-5" target="_blank">
-              Plans
-            </a>
-
-            <a href="#" className="px-5" target="_blank">
-              Contact Us
-            </a>
-          </div>
-          {/* end::Links */}
-        </div>
-        {/* end::Footer */}
       </div>
       {/* end::Body */}
 
@@ -60,16 +40,6 @@ const AuthLayout = () => {
       >
         {/* begin::Content */}
         <div className="d-flex flex-column flex-center py-15 px-5 px-md-15 w-100">
-          {/* begin::Logo */}
-          <Link to="/" className="mb-12">
-            <img
-              alt="Logo"
-              src={toAbsoluteUrl("media/logos/custom-1.png")}
-              className="h-75px"
-            />
-          </Link>
-          {/* end::Logo */}
-
           {/* begin::Image */}
           <img
             className="mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20"

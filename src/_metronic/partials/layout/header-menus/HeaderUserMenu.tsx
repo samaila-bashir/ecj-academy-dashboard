@@ -1,10 +1,15 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../app/modules/auth";
 import { Languages } from "./Languages";
+import { useDispatch } from "react-redux";
+import { SAGA_ACTIONS } from "../../../../store/sagas/actions";
 
 const HeaderUserMenu: FC = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <div
       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -46,7 +51,12 @@ const HeaderUserMenu: FC = () => {
       <Languages />
 
       <div className="menu-item px-5">
-        <a onClick={logout} className="menu-link px-5">
+        <a
+          onClick={() =>
+            dispatch({ type: SAGA_ACTIONS.LOGOUT, payload: { navigate } })
+          }
+          className="menu-link px-5"
+        >
           Sign Out
         </a>
       </div>

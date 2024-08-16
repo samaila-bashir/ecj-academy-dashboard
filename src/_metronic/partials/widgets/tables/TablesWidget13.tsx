@@ -82,7 +82,9 @@ const TablesWidget13: React.FC<Props> = ({
 
   const headers =
     tableData.length > 0
-      ? Object.keys(tableData[0]).filter((key) => key !== "id")
+      ? Object.keys(tableData[0]).filter(
+          (key) => key !== "id" && !key.endsWith("Id")
+        )
       : [];
 
   return (
@@ -96,8 +98,6 @@ const TablesWidget13: React.FC<Props> = ({
           <button
             type="button"
             className="btn btn-primary"
-            // data-bs-toggle="modal"
-            // data-bs-target="#kt_modal_1"
             onClick={() => setShowModal(true)}
           >
             <KTIcon iconName="plus" className="fs-2" />

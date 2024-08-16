@@ -1,7 +1,10 @@
-import { useAuth } from "../../../../app/modules/auth";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SAGA_ACTIONS } from "../../../../store/sagas/actions";
 
 const SidebarFooter = () => {
-  const { logout } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -11,7 +14,9 @@ const SidebarFooter = () => {
       <a
         className="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100"
         data-bs-trigger="hover"
-        onClick={logout}
+        onClick={() =>
+          dispatch({ type: SAGA_ACTIONS.LOGOUT, payload: { navigate } })
+        }
       >
         <span className="btn-label">Sign Out</span>
       </a>
