@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TExpenditure } from "../../../app/utils/types";
 
 interface ExpendituresState {
   expenditures: TExpenditure[];

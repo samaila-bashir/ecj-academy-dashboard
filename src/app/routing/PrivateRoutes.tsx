@@ -5,6 +5,7 @@ import Expenditures from "../pages/Expenditures";
 import Users from "../pages/Users";
 import Players from "../pages/Players";
 import ExpenseCategories from "../pages/ExpenseCategories";
+import Salaries from "../pages/salaries";
 
 const PrivateRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const PrivateRoutes = () => {
         <Route path="dashboard" element={<DashboardWrapper />} />
         <Route path="/ependitures" element={<Expenditures />} />
         <Route path="/players" element={<Players />} />
+        <Route path="/salaries" element={<Salaries />} />
         <Route path="/users" element={<Users />} />
         <Route path="/expense-categories" element={<ExpenseCategories />} />
         {/* Page Not Found */}

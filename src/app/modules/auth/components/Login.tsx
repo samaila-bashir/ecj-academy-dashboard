@@ -2,11 +2,9 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-// import { getUserByToken, login } from "../core/_requests";
 import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { SAGA_ACTIONS } from "../../../../store/sagas/actions";
-// import { useAuth } from "../core/Auth";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store";
 

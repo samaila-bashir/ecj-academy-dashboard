@@ -24,7 +24,6 @@ import {
   deleteCategoryFailure,
 } from "../../slices/expense-categories";
 import { SAGA_ACTIONS } from "../actions";
-import { TExpenseCategory } from "../../../app/utils/types";
 
 function* addCategorySaga(action: {
   type: string;

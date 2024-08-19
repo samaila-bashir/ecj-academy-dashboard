@@ -2,6 +2,8 @@ import React, { forwardRef, useImperativeHandle } from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import TextInput from "../../components/TextInput";
+import { useDispatch } from "react-redux";
+import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("First Name is required"),
@@ -34,6 +36,8 @@ interface FormValues {
 }
 
 const Form = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
+
   const formik = useFormik<FormValues>({
     initialValues,
     validationSchema,
@@ -41,8 +45,12 @@ const Form = forwardRef((props, ref) => {
       values: FormValues,
       { resetForm }: FormikHelpers<FormValues>
     ) => {
-      // Handle form submission
-      console.log(values);
+      const { firstName, lastName, email, password } = values;
+
+      dispatch({
+        type: SAGA_ACTIONS.ADD_USER,
+        payload: { firstName, lastName, email, password },
+      });
 
       resetForm();
     },
@@ -99,7 +107,7 @@ const Form = forwardRef((props, ref) => {
       <div className="row mb-8">
         <TextInput
           label="Password"
-          type="text"
+          type="password"
           name="password"
           placeholder="Enter Password"
           value={formik.values.password}
@@ -110,7 +118,7 @@ const Form = forwardRef((props, ref) => {
         />
         <TextInput
           label="Confirm Password"
-          type="text"
+          type="password"
           name="confirmPassword"
           placeholder="Enter Confirm Password"
           value={formik.values.confirmPassword}

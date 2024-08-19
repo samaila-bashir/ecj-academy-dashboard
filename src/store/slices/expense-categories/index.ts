@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TExpenseCategory } from "../../../app/utils/types";
 
 interface ExpenseCategoriesState {
   categories: TExpenseCategory[];

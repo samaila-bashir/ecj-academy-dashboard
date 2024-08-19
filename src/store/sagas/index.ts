@@ -22,6 +22,14 @@ import {
   watchEditCategory,
   watchDeleteCategory,
 } from "./expense-categories";
+import {
+  watchFetchAllUsers,
+  watchHandleAddUser,
+  watchHandleDeleteUser,
+  watchHandleFetchUser,
+  watchHandleLinkUser,
+  watchHandleUpdateUser,
+} from "./users";
 
 export default function* rootSaga(): Generator {
   yield all([
@@ -40,5 +48,11 @@ export default function* rootSaga(): Generator {
     fork(watchAddCategory),
     fork(watchEditCategory),
     fork(watchDeleteCategory),
+    fork(watchHandleAddUser),
+    fork(watchHandleFetchUser),
+    fork(watchFetchAllUsers),
+    fork(watchHandleUpdateUser),
+    fork(watchHandleDeleteUser),
+    fork(watchHandleLinkUser),
   ]);
 }

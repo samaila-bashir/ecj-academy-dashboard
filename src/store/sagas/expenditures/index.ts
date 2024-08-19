@@ -25,7 +25,6 @@ import {
   deleteExpenditureFailure,
 } from "../../slices/expenditures";
 import { SAGA_ACTIONS } from "../actions";
-import { TExpenditure } from "../../../app/utils/types";
 
 export function* fetchCategoryMap(): Generator<
   any,

@@ -25,7 +25,6 @@ import {
   deletePlayerFailure,
 } from "../../slices/players";
 import { SAGA_ACTIONS } from "../actions";
-import { TPlayers } from "../../../app/utils/types";
 
 function* addPlayerSaga(action: {
   type: string;

@@ -8,25 +8,31 @@ const SidebarMenuMain = () => {
     <>
       <SidebarMenuItem
         to="/dashboard"
-        icon="element-11"
+        icon="home"
         title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
         fontIcon="bi-app-indicator"
       />
       <SidebarMenuItem
         to="/ependitures"
-        icon="abstract-28"
+        icon="receipt-square"
         title="Expenditures"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
         to="/players"
-        icon="abstract-28"
+        icon="people"
         title="Players"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
+        to="/salaries"
+        icon="wallet"
+        title="Salaries"
+        fontIcon="bi-layers"
+      />
+      <SidebarMenuItem
         to="/users"
-        icon="abstract-28"
+        icon="profile-user"
         title="Users"
         fontIcon="bi-layers"
       />
