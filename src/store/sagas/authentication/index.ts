@@ -117,47 +117,6 @@ function* handleGoogleLogin(
   }
 }
 
-// function* handleGoogleLogin(
-//   action: PayloadAction<{ navigate: NavigateFunction }>
-// ): Generator {
-//   const { navigate } = action.payload;
-
-//   try {
-//     yield put(loginRequest());
-
-//     const provider = new GoogleAuthProvider();
-//     const userCredential = (yield call(
-//       signInWithPopup,
-//       auth,
-//       provider
-//     )) as UserCredential;
-
-//     // Check if user exists in Firestore
-//     const userDocRef = doc(db, "users", userCredential.user.uid);
-//     const userDoc = (yield call(
-//       getDoc,
-//       userDocRef
-//     )) as DocumentSnapshot<DocumentData>;
-
-//     if (userDoc.exists()) {
-//       // If user exists, proceed with login
-//       const token: string = (yield call([
-//         userCredential.user,
-//         userCredential.user.getIdToken,
-//       ])) as string;
-
-//       yield put(loginSuccess({ user: userCredential, token }));
-//       navigate("/dashboard");
-//     } else {
-//       yield call(signOut, auth);
-//       yield put(loginFailure("User not registered."));
-//     }
-//   } catch (error: any) {
-//     const errorMessage = getFireBaseLoginErrorMessage(error.code);
-//     yield put(loginFailure(errorMessage));
-//   }
-// }
-
 export function* watchHandleLogout(): Generator {
   yield takeEvery(SAGA_ACTIONS.LOGOUT, handleLogout);
 }
