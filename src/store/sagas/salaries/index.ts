@@ -8,6 +8,8 @@ import {
   doc,
   getDocs,
   getDoc,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import {
@@ -81,7 +83,12 @@ function* fetchAllSalariesSaga(): Generator<any, void, any> {
   try {
     yield put(fetchAllSalariesRequest());
 
-    const salariesSnapshot = yield call(getDocs, collection(db, "salaries"));
+    const salariesQuery = query(
+      collection(db, "salaries"),
+      orderBy("datePaid", "desc")
+    );
+
+    const salariesSnapshot = yield call(getDocs, salariesQuery);
     const fetchedSalaries: TSalary[] = salariesSnapshot.docs.map(
       (doc: any) => ({
         id: doc.id,
