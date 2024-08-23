@@ -1,7 +1,6 @@
 import { forwardRef, useImperativeHandle } from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 
@@ -39,24 +38,10 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
           type: SAGA_ACTIONS.EDIT_EXPENSE_CATEGORY,
           payload: { ...initialData, ...values },
         });
-
-        Swal.fire({
-          title: "Success!",
-          text: "Expenditure category has been updated successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
       } else {
         dispatch({
           type: SAGA_ACTIONS.ADD_EXPENSE_CATEGORY,
           payload: values,
-        });
-
-        Swal.fire({
-          title: "Success!",
-          text: "Expenditure category has been added successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
         });
       }
 

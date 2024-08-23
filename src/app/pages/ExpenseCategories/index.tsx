@@ -35,7 +35,7 @@ const Expenditures = () => {
           className="card-xxl-stretch mb-5 mb-xl-12"
           mainTitle="Recent Expense Categories"
           tableData={categories}
-          modalTitle="Add Category"
+          modalTitle="Category"
           Form={Form}
           onDelete={handleDeleteRecord}
         />

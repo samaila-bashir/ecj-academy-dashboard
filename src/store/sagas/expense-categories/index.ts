@@ -24,6 +24,7 @@ import {
   deleteCategoryFailure,
 } from "../../slices/expense-categories";
 import { SAGA_ACTIONS } from "../actions";
+import { notificationCenter } from "../../../app/utils/toast";
 
 function* addCategorySaga(action: {
   type: string;
@@ -45,8 +46,22 @@ function* addCategorySaga(action: {
     };
 
     yield put(addCategorySuccess(newCategory));
+
+    notificationCenter({
+      message: "Expenditure category has been added successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(addCategoryFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 
@@ -92,8 +107,22 @@ function* editCategorySaga(action: {
     yield call(() => updateDoc(categoryRef, { name: action.payload.name }));
 
     yield put(editCategorySuccess(action.payload));
+
+    notificationCenter({
+      message: "Expenditure category has been updated successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(editCategoryFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 

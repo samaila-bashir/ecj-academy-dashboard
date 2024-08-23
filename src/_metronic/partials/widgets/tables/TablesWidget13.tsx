@@ -175,7 +175,7 @@ const TablesWidget13: React.FC<Props> = ({
       </div>
 
       <Modal
-        title={modalTitle}
+        title={(selectedItem ? "Edit" : "Add") + " " + modalTitle}
         onSubmit={handleSubmit}
         show={showModal}
         handleClose={closeModal}

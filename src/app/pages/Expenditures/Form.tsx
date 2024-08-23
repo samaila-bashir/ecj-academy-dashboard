@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { RootState } from "../../../store";
+import CurrencyInput from "react-currency-input-field";
 
 const validationSchema = Yup.object({
   categoryId: Yup.string().required("Category is required"),
@@ -88,23 +89,25 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
           <div className="text-danger">{formik.errors.categoryId}</div>
         ) : null}
       </div>
-
       <div className="mb-10">
         <label className="form-label">Amount</label>
-        <input
-          type="text"
+        <CurrencyInput
+          id="amount"
           name="amount"
+          prefix="₦"
           className="form-control"
           placeholder="Enter amount"
           value={formik.values.amount}
-          onChange={formik.handleChange}
+          decimalsLimit={2}
+          onValueChange={(value) => {
+            formik.setFieldValue("amount", value);
+          }}
           onBlur={formik.handleBlur}
         />
         {formik.touched.amount && formik.errors.amount ? (
           <div className="text-danger">{formik.errors.amount}</div>
         ) : null}
       </div>
-
       <div className="mb-10">
         <label className="form-label">Expense Description</label>
         <textarea

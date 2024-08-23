@@ -35,7 +35,7 @@ const Players = () => {
           className="card-xxl-stretch mb-5 mb-xl-12"
           mainTitle="All Players"
           tableData={players}
-          modalTitle="Add Player"
+          modalTitle="Player"
           Form={Form}
           onDelete={handleDeleteRecord}
         />

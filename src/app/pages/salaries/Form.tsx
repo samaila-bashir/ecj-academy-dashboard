@@ -1,10 +1,10 @@
 import { forwardRef, useImperativeHandle } from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import TextInput from "../../components/TextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { RootState } from "../../../store";
+import CurrencyInput from "react-currency-input-field";
 
 // import Flatpickr from "react-flatpickr";
 // import "flatpickr/dist/themes/material_green.css";
@@ -90,17 +90,25 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
           ) : null}
         </div>
 
-        <TextInput
-          label="Amount"
-          type="text"
-          name="amount"
-          placeholder="Enter amount"
-          value={String(formik.values.amount)}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.errors.amount}
-          touched={formik.touched.amount}
-        />
+        <div className="col-md-6">
+          <label className="form-label">Amount</label>
+          <CurrencyInput
+            id="amount"
+            name="amount"
+            prefix="₦"
+            className="form-control"
+            placeholder="Enter amount"
+            value={formik.values.amount}
+            decimalsLimit={2}
+            onValueChange={(value) => {
+              formik.setFieldValue("amount", value);
+            }}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.amount && formik.errors.amount ? (
+            <div className="text-danger">{formik.errors.amount}</div>
+          ) : null}
+        </div>
 
         {/* TODO: Implement date picker here. Note, this is optional */}
 

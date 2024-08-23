@@ -39,7 +39,7 @@ const Users = () => {
           className="card-xxl-stretch mb-5 mb-xl-12"
           mainTitle="All Salaries Paid"
           tableData={salaries}
-          modalTitle="Add Salary"
+          modalTitle="Salary"
           Form={Form}
           onDelete={handleDeleteRecord}
         />
