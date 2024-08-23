@@ -8,6 +8,8 @@ import {
   doc,
   getDocs,
   Timestamp,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import {
@@ -25,6 +27,7 @@ import {
   deletePlayerFailure,
 } from "../../slices/players";
 import { SAGA_ACTIONS } from "../actions";
+import { notificationCenter } from "../../../app/utils/toast";
 
 function* addPlayerSaga(action: {
   type: string;
@@ -37,18 +40,32 @@ function* addPlayerSaga(action: {
 
     const docRef = yield call(addDoc, collection(db, "players"), {
       ...action.payload,
-      date: timestamp,
+      dateAdded: timestamp,
     });
 
     const newPlayer = {
       ...action.payload,
       id: docRef.id,
-      date: timestamp.toDate().toLocaleDateString(),
+      dateAdded: timestamp.toDate().toLocaleDateString(),
     };
 
     yield put(addPlayerSuccess(newPlayer));
+
+    notificationCenter({
+      message: "Player has been added successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(addPlayerFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 
@@ -60,7 +77,12 @@ function* fetchPlayersSaga(): Generator<any, void, any> {
   try {
     yield put(fetchPlayersRequest());
 
-    const querySnapshot = yield call(getDocs, collection(db, "players"));
+    const playersQuery = query(
+      collection(db, "players"),
+      orderBy("dateAdded", "desc")
+    );
+
+    const querySnapshot = yield call(getDocs, playersQuery);
 
     const fetchedPlayers: TPlayers[] = querySnapshot.docs.map((doc: any) => {
       const data = doc.data();
@@ -73,7 +95,7 @@ function* fetchPlayersSaga(): Generator<any, void, any> {
         phoneNumber: data.phoneNumber,
         dob: data.dob,
         homeAddress: data.homeAddress,
-        date: data.date.toDate().toLocaleDateString(),
+        dateAdded: data.dateAdded.toDate().toLocaleDateString(),
       };
     });
 
@@ -95,14 +117,28 @@ function* editPlayerSaga(action: {
     yield put(editPlayerRequest());
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { date, ...payloadWithoutDate } = action.payload;
+    const { dateAdded, ...payloadWithoutDate } = action.payload;
 
     const playerRef = doc(db, "players", action.payload.id);
     yield call(() => updateDoc(playerRef, payloadWithoutDate));
 
     yield put(editPlayerSuccess(action.payload));
+
+    notificationCenter({
+      message: "Player has been updated successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(editPlayerFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 

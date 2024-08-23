@@ -34,7 +34,7 @@ declare type TExpenditure = {
   categoryId: string;
   amount: string;
   description: string;
-  date: string;
+  dateAdded: string;
 };
 
 declare type TPlayers = {
@@ -46,7 +46,7 @@ declare type TPlayers = {
   phoneNumber: string;
   dob: string;
   homeAddress: string;
-  date: string;
+  dateAdded: string;
 };
 
 declare interface IUser {

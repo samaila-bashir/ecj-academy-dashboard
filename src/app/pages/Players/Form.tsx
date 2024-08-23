@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import TextInput from "../../components/TextInput";
 import { useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
-import Swal from "sweetalert2";
 import { states } from "../../utils/data";
 
 const validationSchema = Yup.object({
@@ -58,24 +57,10 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
           type: SAGA_ACTIONS.EDIT_PLAYER,
           payload: { ...initialData, ...values },
         });
-
-        Swal.fire({
-          title: "Success!",
-          text: "Player has been updated successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
       } else {
         dispatch({
           type: SAGA_ACTIONS.ADD_PLAYER,
           payload: values,
-        });
-
-        Swal.fire({
-          title: "Success!",
-          text: "Player has been added successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
         });
       }
 

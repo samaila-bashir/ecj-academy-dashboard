@@ -34,7 +34,7 @@ const playersSlice = createSlice({
     },
     addPlayerSuccess(state, action: PayloadAction<TPlayers>) {
       state.loading = false;
-      state.players.push(action.payload);
+      state.players.unshift(action.payload);
     },
     addPlayerFailure(state, action: PayloadAction<string>) {
       state.loading = false;

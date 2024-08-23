@@ -24,7 +24,7 @@ const salariesSlice = createSlice({
     },
     addSalarySuccess: (state, action: PayloadAction<{ salary: TSalary }>) => {
       state.loading = false;
-      state.salaries.push(action.payload.salary);
+      state.salaries.unshift(action.payload.salary);
       state.error = null;
     },
     addSalaryFailure: (state, action: PayloadAction<string>) => {

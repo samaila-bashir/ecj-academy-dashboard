@@ -8,6 +8,8 @@ import {
   doc,
   getDocs,
   Timestamp,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import {
@@ -25,6 +27,7 @@ import {
   deleteExpenditureFailure,
 } from "../../slices/expenditures";
 import { SAGA_ACTIONS } from "../actions";
+import { notificationCenter } from "../../../app/utils/toast";
 
 export function* fetchCategoryMap(): Generator<
   any,
@@ -59,19 +62,37 @@ function* addExpenditureSaga(action: {
 
     const docRef = yield call(addDoc, collection(db, "expenditures"), {
       ...action.payload,
-      date: timestamp,
+      dateAdded: timestamp,
     });
 
+    const data = action.payload;
+
     const newExpenditure = {
-      ...action.payload,
       id: docRef.id,
-      category: categoryMap[action.payload.categoryId] || "Unknown Category",
-      date: timestamp.toDate().toLocaleDateString(),
+      categoryId: data.categoryId,
+      category: categoryMap[data.categoryId] || "Unknown Category",
+      amount: data.amount,
+      description: data.description,
+      dateAdded: timestamp.toDate().toLocaleDateString(),
     };
 
     yield put(addExpenditureSuccess(newExpenditure));
+
+    notificationCenter({
+      message: "Expenditure has been added successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(addExpenditureFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 
@@ -85,7 +106,12 @@ function* fetchExpendituresSaga(): Generator<any, void, any> {
 
     const categoryMap = yield* fetchCategoryMap();
 
-    const querySnapshot = yield call(getDocs, collection(db, "expenditures"));
+    const expendituresQuery = query(
+      collection(db, "expenditures"),
+      orderBy("dateAdded", "desc")
+    );
+
+    const querySnapshot = yield call(getDocs, expendituresQuery);
 
     const fetchedExpenditures: TExpenditure[] = querySnapshot.docs.map(
       (doc: any) => {
@@ -96,7 +122,7 @@ function* fetchExpendituresSaga(): Generator<any, void, any> {
           category: categoryMap[data.categoryId] || "Unknown Category",
           amount: data.amount,
           description: data.description,
-          date: data.date.toDate().toLocaleDateString(),
+          dateAdded: data.dateAdded.toDate().toLocaleDateString(),
         };
       }
     );
@@ -121,7 +147,7 @@ function* editExpenditureSaga(action: {
     const categoryMap = yield* fetchCategoryMap();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { date, ...payloadWithoutDate } = action.payload;
+    const { dateAdded, ...payloadWithoutDate } = action.payload;
 
     const updatedCategory =
       categoryMap[action.payload.categoryId] || "Unknown Category";
@@ -135,8 +161,22 @@ function* editExpenditureSaga(action: {
     };
 
     yield put(editExpenditureSuccess(updatedExpenditure));
+
+    notificationCenter({
+      message: "Expenditure has been updated successfully.",
+      status: "success",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    });
   } catch (error: any) {
     yield put(editExpenditureFailure(error.message));
+
+    notificationCenter({
+      message: "Operation failed, please try again.",
+      status: "error",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    });
   }
 }
 

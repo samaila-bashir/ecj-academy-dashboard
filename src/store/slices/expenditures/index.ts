@@ -34,7 +34,7 @@ const expendituresSlice = createSlice({
     },
     addExpenditureSuccess(state, action: PayloadAction<TExpenditure>) {
       state.loading = false;
-      state.expenditures.push(action.payload);
+      state.expenditures.unshift(action.payload);
     },
     addExpenditureFailure(state, action: PayloadAction<string>) {
       state.loading = false;

@@ -61,6 +61,7 @@ function* addSalarySaga(action: {
     notificationCenter({
       message: "Salary has been added successfully.",
       status: "success",
+      showConfirmButton: true,
       confirmButtonText: "Ok",
     });
   } catch (error: any) {
@@ -145,6 +146,7 @@ function* updateSalarySaga(action: {
     notificationCenter({
       message: "Salary has been updated successfully.",
       status: "success",
+      showConfirmButton: true,
       confirmButtonText: "Ok",
     });
   } catch (error: any) {
