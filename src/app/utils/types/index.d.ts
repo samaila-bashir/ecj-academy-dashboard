@@ -63,3 +63,27 @@ declare interface ILoginActionPayload {
   user: IUser;
   navigate: NavigateFunction;
 }
+
+declare type TSalary = {
+  id: string;
+  playerId: string;
+  playerName?: string;
+  amount: number;
+  datePaid: string;
+};
+
+declare enum EToastType {
+  info = "info",
+  success = "success",
+  error = "error",
+  warn = "warn",
+}
+
+declare type TToastType = keyof typeof EToastType;
+
+declare interface IToast {
+  title?: string;
+  status?: TToastType;
+  autoClose?: false;
+  message: string;
+}

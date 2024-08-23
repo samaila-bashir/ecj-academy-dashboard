@@ -4,7 +4,6 @@ import {
   AuthError,
   GoogleAuthProvider,
   linkWithCredential,
-  // linkWithPopup,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
