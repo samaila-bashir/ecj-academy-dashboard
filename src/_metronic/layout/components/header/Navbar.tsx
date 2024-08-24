@@ -24,7 +24,8 @@ const Navbar = () => {
           data-kt-menu-attach="parent"
           data-kt-menu-placement="bottom-end"
         >
-          <img src="https://placehold.co/300x300" alt="" />
+          {/* <img src="https://placehold.co/300x300" alt="" /> */}
+          <img alt="Logo" src="/media/avatars/dominic.jpg" />
         </div>
         <HeaderUserMenu />
       </div>

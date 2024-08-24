@@ -18,7 +18,8 @@ const HeaderUserMenu: FC = () => {
       <div className="menu-item px-3">
         <div className="menu-content d-flex align-items-center px-3">
           <div className="symbol symbol-50px me-5">
-            <img alt="Logo" src="https://placehold.co/300x300" />
+            {/* <img alt="Logo" src="https://placehold.co/300x300" /> */}
+            <img alt="Logo" src="/media/avatars/dominic.jpg" />
           </div>
 
           <div className="d-flex flex-column">

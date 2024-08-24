@@ -1,5 +1,7 @@
 # ECJ Football Academy Management Dashboard
 
+![Dashboard Image](public/media/dashboard.jpg)
+
 ## Overview
 
 This project is a comprehensive dashboard application designed for a football academy. The dashboard provides tools for managing players, tracking expenditures, viewing reports, managing salaries, and more. Built with modern web technologies, the application aims to streamline operations within the academy and provide a user-friendly interface for administrators.
