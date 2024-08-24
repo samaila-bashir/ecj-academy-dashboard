@@ -7,16 +7,21 @@ import Form from "./Form";
 import { RootState } from "../../../store";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { useEffect } from "react";
+import Loader from "../../modules/auth/components/Loader";
 
 const Users = () => {
   const dispatch = useDispatch();
-  const { error, users } = useSelector((state: RootState) => state.users);
+  const { error, users, loading } = useSelector(
+    (state: RootState) => state.users
+  );
 
   useEffect(() => {
     dispatch({
       type: SAGA_ACTIONS.FETCH_USERS,
     });
   }, [dispatch]);
+
+  if (loading) return <Loader />;
 
   return (
     <>

@@ -7,6 +7,7 @@ import Form from "./Form";
 import { useSelector, useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { RootState } from "../../../store";
+import Loader from "../../modules/auth/components/Loader";
 
 const Expenditures = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Expenditures = () => {
     dispatch({ type: SAGA_ACTIONS.GET_EXPENSES_CATEGORIES });
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   const handleDeleteRecord = (id: string | number) => {

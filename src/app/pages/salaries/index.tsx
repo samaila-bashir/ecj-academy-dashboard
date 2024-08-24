@@ -7,10 +7,13 @@ import Form from "./Form";
 import { RootState } from "../../../store";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { useEffect } from "react";
+import Loader from "../../modules/auth/components/Loader";
 
 const Users = () => {
   const dispatch = useDispatch();
-  const { error, salaries } = useSelector((state: RootState) => state.salaries);
+  const { error, salaries, loading } = useSelector(
+    (state: RootState) => state.salaries
+  );
 
   useEffect(() => {
     dispatch({
@@ -21,6 +24,8 @@ const Users = () => {
   const handleDeleteRecord = (id: string | number) => {
     dispatch({ type: SAGA_ACTIONS.DELETE_SALARY, payload: id });
   };
+
+  if (loading) return <Loader />;
 
   return (
     <>

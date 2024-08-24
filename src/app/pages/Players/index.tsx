@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SAGA_ACTIONS } from "../../../store/sagas/actions";
 import { RootState } from "../../../store";
 import { useEffect } from "react";
+import Loader from "../../modules/auth/components/Loader";
 
 const Players = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Players = () => {
     dispatch({ type: SAGA_ACTIONS.GET_PLAYERS });
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   const handleDeleteRecord = (id: string | number) => {
