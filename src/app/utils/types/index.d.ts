@@ -32,6 +32,7 @@ declare type TExpenseCategory = {
 declare type TExpenditure = {
   id: string;
   categoryId: string;
+  category: string;
   amount: string;
   description: string;
   dateAdded: string;
@@ -68,7 +69,7 @@ declare type TSalary = {
   id: string;
   playerId: string;
   playerName?: string;
-  amount: number;
+  amount: string;
   datePaid: string;
 };
 
