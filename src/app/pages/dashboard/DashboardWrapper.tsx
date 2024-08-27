@@ -54,7 +54,7 @@ const DashboardWrapper: FC = () => {
             <ComposedChart title="Salaries" data={salariesData} />
           </div>
         </div>
-        <div className="row gy-5 gx-xl-12 mt-20">
+        <div className="row gy-5 gx-xl-12 mt-10">
           <StatsBox
             value={totalExpenses}
             title="Total Expenses Made"
