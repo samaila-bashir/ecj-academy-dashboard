@@ -33,10 +33,10 @@ const Expenditures = () => {
       <PageTitle>Expenditures</PageTitle>
       <Content>
         <TablesWidget13
-          className="card-xxl-stretch mb-5 mb-xl-12"
-          mainTitle="Recent Expenditures"
+          className='card-xxl-stretch mb-5 mb-xl-12'
+          mainTitle='Recent Expenditures'
           tableData={expenditures}
-          modalTitle="Expenditure"
+          modalTitle='Expenditure'
           Form={Form}
           onDelete={handleDeleteRecord}
         />

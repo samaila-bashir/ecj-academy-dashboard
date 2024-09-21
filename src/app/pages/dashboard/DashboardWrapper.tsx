@@ -21,6 +21,7 @@ const DashboardWrapper: FC = () => {
       expenditures: state.expense.expenditures,
       salaries: state.salaries.salaries,
       players: state.players.players,
+      // isSuperAdmin: state.authentication.isSuperAdmin,
     }),
     shallowEqual
   );
@@ -46,31 +47,31 @@ const DashboardWrapper: FC = () => {
     <>
       <ToolbarWrapper />
       <Content>
-        <div className="row gy-5 gx-xl-12">
-          <div className="col-xl-6">
-            <PieChart title="Expenditures" data={expendituresData} />
+        <div className='row gy-5 gx-xl-12'>
+          <div className='col-xl-6'>
+            <PieChart title='Expenditures' data={expendituresData} />
           </div>
-          <div className="col-xl-6">
-            <ComposedChart title="Salaries" data={salariesData} />
+          <div className='col-xl-6'>
+            <ComposedChart title='Salaries' data={salariesData} />
           </div>
         </div>
-        <div className="row gy-5 gx-xl-12 mt-10">
+        <div className='row gy-5 gx-xl-12 mt-10'>
           <StatsBox
             value={totalExpenses}
-            title="Total Expenses Made"
-            color="#d4edda"
+            title='Total Expenses Made'
+            color='#d4edda'
             isCurrency={true}
           />
           <StatsBox
             value={totalPlayers}
-            title="Registered Players"
-            color="#d1ecf1"
+            title='Registered Players'
+            color='#d1ecf1'
             isCurrency={false}
           />
           <StatsBox
             value={totalSalaries}
-            title="Total Salaries Paid"
-            color="#b3b0e6"
+            title='Total Salaries Paid'
+            color='#b3b0e6'
             isCurrency={true}
           />
         </div>

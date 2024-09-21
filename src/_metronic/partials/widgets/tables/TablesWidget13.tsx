@@ -7,6 +7,8 @@ import {
   formatAmount,
 } from "../../../../app/utils/helpers";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
 
 type Data = {
   [key: string]: string | number;
@@ -41,6 +43,10 @@ const TablesWidget13: React.FC<Props> = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Data | null>(null);
+
+  const { isSuperAdmin } = useSelector(
+    (state: RootState) => state.authentication
+  );
 
   const closeModal = () => {
     setShowModal(false);
@@ -91,35 +97,39 @@ const TablesWidget13: React.FC<Props> = ({
     <>
       <div className={`card ${className}`}>
         {/* begin::Header */}
-        <div className="card-header border-0 pt-5">
-          <h3 className="card-title align-items-start flex-column">
-            <span className="card-label fw-bold fs-3 mb-1">{mainTitle}</span>
+        <div className='card-header border-0 pt-5'>
+          <h3 className='card-title align-items-start flex-column'>
+            <span className='card-label fw-bold fs-3 mb-1'>{mainTitle}</span>
           </h3>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => setShowModal(true)}
-          >
-            <KTIcon iconName="plus" className="fs-2" />
-            Add Record
-          </button>
+          {isSuperAdmin && (
+            <button
+              type='button'
+              className='btn btn-primary'
+              onClick={() => setShowModal(true)}
+            >
+              <KTIcon iconName='plus' className='fs-2' />
+              Add Record
+            </button>
+          )}
         </div>
         {/* end::Header */}
         {/* begin::Body */}
-        <div className="card-body py-3">
+        <div className='card-body py-3'>
           {/* begin::Table container */}
-          <div className="table-responsive">
+          <div className='table-responsive'>
             {/* begin::Table */}
-            <table className="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+            <table className='table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3'>
               {/* begin::Table head */}
               <thead>
-                <tr className="fw-bold text-muted">
+                <tr className='fw-bold text-muted'>
                   {headers.map((header) => (
-                    <th key={header} className="min-w-120px">
+                    <th key={header} className='min-w-120px'>
                       {capitalizeFirstLetter(addSpaceBeforeUppercase(header))}
                     </th>
                   ))}
-                  <th className="min-w-100px text-end">Actions</th>
+                  {isSuperAdmin && (
+                    <th className='min-w-100px text-end'>Actions</th>
+                  )}
                 </tr>
               </thead>
               {/* end::Table head */}
@@ -128,40 +138,42 @@ const TablesWidget13: React.FC<Props> = ({
                 {tableData.map((data, index) => (
                   <tr key={index}>
                     {headers.map((header) => (
-                      <td className="text-gray-900 fs-6" key={header}>
+                      <td className='text-gray-900 fs-6' key={header}>
                         {header === "amount"
                           ? formatAmount(data[header])
                           : data[header]}
                       </td>
                     ))}
-                    <td className="text-end">
-                      {showDetailsBtn && (
-                        <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                        >
-                          <KTIcon iconName="switch" className="fs-3" />
-                        </a>
-                      )}
-                      {showEditBtn && (
-                        <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                          onClick={() => handleEdit(data)}
-                        >
-                          <KTIcon iconName="pencil" className="fs-3" />
-                        </a>
-                      )}
-                      {showDeleteBtn && (
-                        <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                          onClick={() => handleDelete(data.id)}
-                        >
-                          <KTIcon iconName="trash" className="fs-3" />
-                        </a>
-                      )}
-                    </td>
+                    {isSuperAdmin && (
+                      <td className='text-end'>
+                        {showDetailsBtn && (
+                          <a
+                            href='#'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                          >
+                            <KTIcon iconName='switch' className='fs-3' />
+                          </a>
+                        )}
+                        {showEditBtn && (
+                          <a
+                            href='#'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                            onClick={() => handleEdit(data)}
+                          >
+                            <KTIcon iconName='pencil' className='fs-3' />
+                          </a>
+                        )}
+                        {showDeleteBtn && (
+                          <a
+                            href='#'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+                            onClick={() => handleDelete(data.id)}
+                          >
+                            <KTIcon iconName='trash' className='fs-3' />
+                          </a>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

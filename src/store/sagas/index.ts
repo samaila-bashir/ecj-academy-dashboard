@@ -1,7 +1,7 @@
 import { all, fork } from "redux-saga/effects";
 import {
   watchHandleGoogleLogin,
-  watchHandleLogin,
+  // watchHandleLogin,
   watchHandleLogout,
 } from "./authentication";
 import {
@@ -39,7 +39,7 @@ import {
 
 export default function* rootSaga(): Generator {
   yield all([
-    fork(watchHandleLogin),
+    // fork(watchHandleLogin),
     fork(watchHandleLogout),
     watchHandleGoogleLogin(),
     fork(watchFetchExpenditures),

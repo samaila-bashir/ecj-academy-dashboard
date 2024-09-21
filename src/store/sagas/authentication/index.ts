@@ -4,7 +4,7 @@ import {
   AuthError,
   GoogleAuthProvider,
   linkWithCredential,
-  signInWithEmailAndPassword,
+  // signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   type UserCredential,
@@ -28,37 +28,37 @@ import {
   DocumentData,
 } from "firebase/firestore";
 
-export function* watchHandleLogin(): Generator {
-  yield takeLatest(SAGA_ACTIONS.LOGIN, handleLogin);
-}
+// export function* watchHandleLogin(): Generator {
+//   yield takeLatest(SAGA_ACTIONS.LOGIN, handleLogin);
+// }
 
-function* handleLogin(action: PayloadAction<ILoginActionPayload>): Generator {
-  const { email, password } = action.payload.user;
-  const { navigate } = action.payload;
+// function* handleLogin(action: PayloadAction<ILoginActionPayload>): Generator {
+//   const { email, password } = action.payload.user;
+//   const { navigate } = action.payload;
 
-  try {
-    yield put(loginRequest());
+//   try {
+//     yield put(loginRequest());
 
-    const userCredential = (yield call(
-      signInWithEmailAndPassword,
-      auth,
-      email,
-      password
-    )) as UserCredential;
+//     const userCredential = (yield call(
+//       signInWithEmailAndPassword,
+//       auth,
+//       email,
+//       password
+//     )) as UserCredential;
 
-    const token: string = (yield call([
-      userCredential.user,
-      userCredential.user.getIdToken,
-    ])) as string;
+//     const token: string = (yield call([
+//       userCredential.user,
+//       userCredential.user.getIdToken,
+//     ])) as string;
 
-    yield put(loginSuccess({ user: userCredential, token }));
+//     yield put(loginSuccess({ user: userCredential, token }));
 
-    yield call(() => navigate("/dashboard"));
-  } catch (error: any) {
-    const errorMessage = getFireBaseLoginErrorMessage(error.code);
-    yield put(loginFailure(errorMessage));
-  }
-}
+//     yield call(() => navigate("/dashboard"));
+//   } catch (error: any) {
+//     const errorMessage = getFireBaseLoginErrorMessage(error.code);
+//     yield put(loginFailure(errorMessage));
+//   }
+// }
 
 // function* handleLogin(action: PayloadAction<ILoginActionPayload>): Generator {
 //   const { email, password } = action.payload.user;
@@ -166,6 +166,11 @@ function* handleGoogleLogin(
     )) as DocumentSnapshot<DocumentData>;
 
     if (userDoc.exists()) {
+      const userData = userDoc.data();
+
+      // Check if the user is a super admin
+      const isSuperAdmin = userData?.isSuperAdmin || false;
+
       // If the user exists, link the Google account if not already linked
       const isGoogleLinked = googleUserCredential.user.providerData.some(
         (p) => p.providerId === GoogleAuthProvider.PROVIDER_ID
@@ -178,13 +183,14 @@ function* handleGoogleLogin(
         }
       }
 
-      // Proceed with login
       const token: string = (yield call([
         googleUserCredential.user,
         googleUserCredential.user.getIdToken,
       ])) as string;
 
-      yield put(loginSuccess({ user: googleUserCredential, token }));
+      yield put(
+        loginSuccess({ user: googleUserCredential, token, isSuperAdmin })
+      );
       navigate("/dashboard");
     } else {
       // Sign out and show error if the user is not registered
