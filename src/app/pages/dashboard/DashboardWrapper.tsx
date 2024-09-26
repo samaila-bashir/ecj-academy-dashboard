@@ -21,7 +21,6 @@ const DashboardWrapper: FC = () => {
       expenditures: state.expense.expenditures,
       salaries: state.salaries.salaries,
       players: state.players.players,
-      // isSuperAdmin: state.authentication.isSuperAdmin,
     }),
     shallowEqual
   );
