@@ -94,6 +94,9 @@ function* fetchPlayersSaga(): Generator<any, void, any> {
         email: data.email,
         phoneNumber: data.phoneNumber,
         dob: data.dob,
+        contactPerson: data.contactPerson,
+        jerseyNumber: data.jerseyNumber,
+        nickName: data.nickName,
         homeAddress: data.homeAddress,
         dateAdded: data.dateAdded.toDate().toLocaleDateString(),
       };

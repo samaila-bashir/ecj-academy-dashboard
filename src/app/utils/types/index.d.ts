@@ -46,7 +46,11 @@ declare type TPlayers = {
   email: string;
   phoneNumber: string;
   dob: string;
+  contactPerson: string;
+  jerseyNumber: string;
+  nickName: string;
   homeAddress: string;
+  nickName: string;
   dateAdded: string;
 };
 
