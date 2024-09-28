@@ -44,12 +44,12 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
     ) => {
       if (initialData) {
         dispatch({
-          type: SAGA_ACTIONS.EDIT_SALARY,
+          type: SAGA_ACTIONS.EDIT_PLAYER_SALARY,
           payload: { ...initialData, ...values },
         });
       } else {
         dispatch({
-          type: SAGA_ACTIONS.ADD_SALARY,
+          type: SAGA_ACTIONS.ADD_PLAYER_SALARY,
           payload: values,
         });
       }
@@ -66,38 +66,38 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="row mb-8">
-        <div className="col-md-6">
+      <div className='row mb-8'>
+        <div className='col-md-6'>
           {/* TODO: Use React searchable Select for this. Check docs */}
-          <label className="form-label">Player</label>
+          <label className='form-label'>Player</label>
           <select
-            name="playerId"
-            className="form-select"
-            aria-label="Select Player"
+            name='playerId'
+            className='form-select'
+            aria-label='Select Player'
             value={formik.values.playerId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
-            <option value="">--- Select State ---</option>
+            <option value=''>--- Select State ---</option>
             {players.map((player) => (
               <option value={player.id} key={player.id}>
-                {player.firstName + " " + player.firstName}
+                {player.firstName + " " + player.lastName}
               </option>
             ))}
           </select>
           {formik.touched.playerId && formik.errors.playerId ? (
-            <div className="text-danger">{formik.errors.playerId}</div>
+            <div className='text-danger'>{formik.errors.playerId}</div>
           ) : null}
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">Amount</label>
+        <div className='col-md-6'>
+          <label className='form-label'>Amount</label>
           <CurrencyInput
-            id="amount"
-            name="amount"
-            prefix="₦"
-            className="form-control"
-            placeholder="Enter amount"
+            id='amount'
+            name='amount'
+            prefix='₦'
+            className='form-control'
+            placeholder='Enter amount'
             value={formik.values.amount}
             decimalsLimit={2}
             onValueChange={(value) => {
@@ -106,7 +106,7 @@ const Form = forwardRef(({ initialData }: FormProps, ref) => {
             onBlur={formik.handleBlur}
           />
           {formik.touched.amount && formik.errors.amount ? (
-            <div className="text-danger">{formik.errors.amount}</div>
+            <div className='text-danger'>{formik.errors.amount}</div>
           ) : null}
         </div>
 

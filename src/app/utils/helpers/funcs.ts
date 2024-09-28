@@ -89,7 +89,7 @@ export const aggregateExpenditureDataByCategory = (
   return aggregatedData;
 };
 
-export const processSalaryData = (salaries: TSalary[]) => {
+export const processSalaryData = (salaries: TPlayerSalary[]) => {
   const monthlyData = salaries.reduce(
     (acc: { [key: string]: number }, { amount, datePaid }) => {
       const [, month, year] = datePaid.split("/");

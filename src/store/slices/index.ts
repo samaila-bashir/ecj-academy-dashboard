@@ -4,7 +4,7 @@ import expenseReducer from "./expenditures";
 import playersReducer from "./players";
 import expenseCategoriesReducer from "./expense-categories";
 import usersReducer from "./users";
-import salariesReducer from "./salaries";
+import playersSalariesReducer from "./players-salaries";
 
 const rootReducer = combineReducers({
   authentication: loginReducer,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   players: playersReducer,
   expenseCategory: expenseCategoriesReducer,
   users: usersReducer,
-  salaries: salariesReducer,
+  playersSalaries: playersSalariesReducer,
 });
 
 export default rootReducer;

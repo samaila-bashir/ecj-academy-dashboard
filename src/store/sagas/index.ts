@@ -31,11 +31,11 @@ import {
   watchHandleUpdateUser,
 } from "./users";
 import {
-  watchAddSalary,
-  watchDeleteSalary,
-  watchFetchAllSalaries,
-  watchUpdateSalary,
-} from "./salaries";
+  watchAddPlayerSalary,
+  watchDeletePlayerSalary,
+  watchFetchAllPlayerSalaries,
+  watchUpdatePlayerSalary,
+} from "./players-salaries";
 
 export default function* rootSaga(): Generator {
   yield all([
@@ -60,9 +60,9 @@ export default function* rootSaga(): Generator {
     fork(watchHandleUpdateUser),
     fork(watchHandleDeleteUser),
     fork(watchHandleLinkUser),
-    fork(watchAddSalary),
-    fork(watchFetchAllSalaries),
-    fork(watchUpdateSalary),
-    fork(watchDeleteSalary),
+    fork(watchAddPlayerSalary),
+    fork(watchFetchAllPlayerSalaries),
+    fork(watchUpdatePlayerSalary),
+    fork(watchDeletePlayerSalary),
   ]);
 }

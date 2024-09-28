@@ -5,23 +5,23 @@ import Expenditures from "../pages/Expenditures";
 import Users from "../pages/Users";
 import Players from "../pages/Players";
 import ExpenseCategories from "../pages/ExpenseCategories";
-import Salaries from "../pages/salaries";
+import PlayersSalaries from "../pages/players-salaries";
 
 const PrivateRoutes = () => {
   return (
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
-        <Route path="auth/*" element={<Navigate to="/dashboard" />} />
+        <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
-        <Route path="dashboard" element={<DashboardWrapper />} />
-        <Route path="/ependitures" element={<Expenditures />} />
-        <Route path="/players" element={<Players />} />
-        <Route path="/salaries" element={<Salaries />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/expense-categories" element={<ExpenseCategories />} />
+        <Route path='dashboard' element={<DashboardWrapper />} />
+        <Route path='/ependitures' element={<Expenditures />} />
+        <Route path='/players' element={<Players />} />
+        <Route path='/players-salaries' element={<PlayersSalaries />} />
+        <Route path='/users' element={<Users />} />
+        <Route path='/expense-categories' element={<ExpenseCategories />} />
         {/* Page Not Found */}
-        <Route path="*" element={<Navigate to="/error/404" />} />
+        <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>
     </Routes>
   );

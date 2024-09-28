@@ -19,18 +19,24 @@ const DashboardWrapper: FC = () => {
   const { expenditures, salaries, players } = useSelector(
     (state: RootState) => ({
       expenditures: state.expense.expenditures,
-      salaries: state.salaries.salaries,
+      salaries: state.playersSalaries.playersSalaries,
       players: state.players.players,
     }),
     shallowEqual
   );
 
-  const expendituresData = aggregateExpenditureDataByCategory(expenditures);
-  const salariesData = useMemo(() => processSalaryData(salaries), [salaries]);
+  const expendituresData = useMemo(
+    () => aggregateExpenditureDataByCategory(expenditures || []),
+    [expenditures]
+  );
+  const salariesData = useMemo(
+    () => processSalaryData(salaries || []),
+    [salaries]
+  );
 
-  const totalSalaries = sumAmounts(salaries);
-  const totalExpenses = sumAmounts(expenditures);
-  const totalPlayers = players.length;
+  const totalSalaries = sumAmounts(salaries || []);
+  const totalExpenses = sumAmounts(expenditures || []);
+  const totalPlayers = players?.length || 0;
 
   useEffect(() => {
     dispatch({
@@ -38,7 +44,7 @@ const DashboardWrapper: FC = () => {
     });
 
     dispatch({
-      type: SAGA_ACTIONS.GET_SALARIES,
+      type: SAGA_ACTIONS.GET_PLAYER_SALARIES,
     });
   }, [dispatch]);
 

@@ -69,7 +69,7 @@ declare interface ILoginActionPayload {
   navigate: NavigateFunction;
 }
 
-declare type TSalary = {
+declare type TPlayerSalary = {
   id: string;
   playerId: string;
   playerName?: string;

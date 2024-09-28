@@ -7,34 +7,34 @@ const SidebarMenuMain = () => {
   return (
     <>
       <SidebarMenuItem
-        to="/dashboard"
-        icon="home"
+        to='/dashboard'
+        icon='home'
         title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
-        fontIcon="bi-app-indicator"
+        fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to="/ependitures"
-        icon="receipt-square"
-        title="Expenditures"
-        fontIcon="bi-layers"
+        to='/ependitures'
+        icon='receipt-square'
+        title='Expenditures'
+        fontIcon='bi-layers'
       />
       <SidebarMenuItem
-        to="/players"
-        icon="people"
-        title="Players"
-        fontIcon="bi-layers"
+        to='/players'
+        icon='people'
+        title='Players'
+        fontIcon='bi-layers'
       />
       <SidebarMenuItem
-        to="/salaries"
-        icon="wallet"
-        title="Salaries"
-        fontIcon="bi-layers"
+        to='/players-salaries'
+        icon='wallet'
+        title='Players Salaries'
+        fontIcon='bi-layers'
       />
       <SidebarMenuItem
-        to="/users"
-        icon="profile-user"
-        title="Users"
-        fontIcon="bi-layers"
+        to='/users'
+        icon='profile-user'
+        title='Users'
+        fontIcon='bi-layers'
       />
     </>
   );
