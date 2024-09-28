@@ -36,6 +36,12 @@ import {
   watchFetchAllPlayerSalaries,
   watchUpdatePlayerSalary,
 } from "./players-salaries";
+import {
+  watchAddInvestment,
+  watchDeleteInvestment,
+  watchEditInvestment,
+  watchFetchInvestments,
+} from "./investments";
 
 export default function* rootSaga(): Generator {
   yield all([
@@ -64,5 +70,9 @@ export default function* rootSaga(): Generator {
     fork(watchFetchAllPlayerSalaries),
     fork(watchUpdatePlayerSalary),
     fork(watchDeletePlayerSalary),
+    fork(watchAddInvestment),
+    fork(watchDeleteInvestment),
+    fork(watchEditInvestment),
+    fork(watchFetchInvestments),
   ]);
 }

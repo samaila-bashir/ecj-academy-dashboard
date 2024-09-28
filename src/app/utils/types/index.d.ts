@@ -92,3 +92,12 @@ declare interface IToast {
   autoClose?: false;
   message: string;
 }
+
+declare type TInvestment = {
+  id: string;
+  userId: string;
+  description: string;
+  amount: string;
+  dateAdded: string;
+  investor: string;
+};

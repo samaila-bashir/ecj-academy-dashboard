@@ -13,6 +13,12 @@ const SidebarMenuMain = () => {
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
+        to='/investments'
+        icon='receipt-square'
+        title='Investments'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
         to='/ependitures'
         icon='receipt-square'
         title='Expenditures'
