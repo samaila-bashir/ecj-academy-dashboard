@@ -14,9 +14,9 @@ const StatsBox: React.FC<StatsBoxProps> = ({
   isCurrency = true,
 }) => {
   return (
-    <div className="col-md-4">
+    <div className='col-md-6'>
       <div
-        className="border rounded p-4 text-center"
+        className='border rounded p-4 text-center'
         style={{ backgroundColor: color }}
       >
         <div style={{ fontSize: "20px", fontWeight: "bold" }}>
